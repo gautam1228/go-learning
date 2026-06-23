@@ -5,21 +5,36 @@ import (
 	"time"
 )
 
+// Embedded struct
+type customer struct {
+	id    uint8
+	name  string
+	phone string
+}
+
 // Order struct
 type order struct {
 	id        uint8 // 255 unique values
 	amount    float32
 	status    string
 	createdAt time.Time // nanosecond precision
+
+	customer // Defining the embedded struct
+
+	// Note: embedded struct can be defined like this too
+	// customer struct {
+	// 	name  string
+	// 	phone string
+	// }
 }
 
 /*
  * ----- Note -----
  * receiver type
  * this function is now attached to the struct
- * it's a convention to use the first word of the struct
+ * " it's a convention to use the first word of the struct
  * as the name of the var of the struct we are passing
- * into the method
+ * into the method "
  * ----- Note -----
  */
 // func (o order) changeOrderStatus(status string) {
@@ -33,6 +48,17 @@ func (o *order) changeOrderStatusWithPtr(status string) {
 // We don't pass the struct var as a ptr because this works just as well
 func (o order) getOrderAmount() float32 {
 	return o.amount
+}
+
+// A kinda constructor
+func newOrder(id uint8, amount float32, status string, c customer) *order {
+	return &order{
+		id:        id,
+		amount:    amount,
+		status:    status,
+		createdAt: time.Now(),
+		customer:  c,
+	}
 }
 
 func main() {
@@ -70,4 +96,32 @@ func main() {
 
 	fmt.Println(language)
 
+	// Embedded struct example
+	thirdOrder := order{
+		id:     3,
+		amount: 799.99,
+		status: "RECEIVED",
+		customer: customer{
+			id:    1,
+			name:  "John",
+			phone: "1234567890",
+		},
+	}
+
+	fmt.Println(thirdOrder)
+
+	thirdOrder.customer.name = "Ron"
+	fmt.Println(thirdOrder)
+
+	fourthOrder := newOrder(
+		4,
+		699.99,
+		"CANCELLED",
+		customer{
+			id:    2,
+			name:  "KAREN",
+			phone: "1231231231",
+		},
+	)
+	fmt.Println(fourthOrder)
 }
