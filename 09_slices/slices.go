@@ -20,8 +20,8 @@ func main() {
 	nums = append(nums, 1)
 
 	fmt.Println(nums)
-	fmt.Println("len: ", len(nums)) // by default length is 0
-	fmt.Println("cap: ", cap(nums)) // by default capacity is 0
+	fmt.Println("len: ", len(nums)) // now length is  1
+	fmt.Println("cap: ", cap(nums)) // now capacity is 1
 
 	// Note: capacity doubles each time an element is added
 	// beyond the original capacity of the slice
