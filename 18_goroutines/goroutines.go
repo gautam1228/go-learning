@@ -27,8 +27,11 @@ func main() {
 		go task(i)
 	}
 
-	go display("Hi, Goroutine !")
-	display("Hi, main !")
+	time.Sleep(time.Second * 1) // naive way to handle goroutines and concurrency
 
-	time.Sleep(time.Second * 2) // naive way to handle goroutines and concurrency
+	go display("Hi, Goroutine !")
+
+	time.Sleep(time.Second) // naive way
+
+	display("Hi, main !")
 }
