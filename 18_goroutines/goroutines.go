@@ -9,6 +9,12 @@ func task(id int) {
 	fmt.Println("Doing task: ", id)
 }
 
+func display(message string) {
+	for range 3 {
+		fmt.Println(message)
+	}
+}
+
 func main() {
 	// This is Blocking-code, runs one after the completion of the other
 	// for i := 1; i <= 10; i++ {
@@ -21,5 +27,8 @@ func main() {
 		go task(i)
 	}
 
-	time.Sleep(time.Millisecond * 500) // naive way to handle goroutines and concurrency
+	go display("Hi, Goroutine !")
+	display("Hi, main !")
+
+	time.Sleep(time.Second * 2) // naive way to handle goroutines and concurrency
 }
